@@ -45,12 +45,13 @@ const covid19ImpactEstimator = (data) => {
   severeImpact.infectionsByRequestedTime = severeImpact.currentlyInfected * (2 ** factor);
 
   // challenge 2
-  const estimatedBeds = Math.floor(0.35 * totalHospitalBeds);
+  const estimatedBeds = 0.35 * totalHospitalBeds;
   impact.severeCasesByRequestedTime = 0.15 * impact.infectionsByRequestedTime;
   severeImpact.severeCasesByRequestedTime = 0.15 * severeImpact.infectionsByRequestedTime;
-  impact.hospitalBedsByRequestedTime = estimatedBeds - impact.severeCasesByRequestedTime;
-  const hospitalBeds = estimatedBeds - severeImpact.severeCasesByRequestedTime;
-  severeImpact.hospitalBedsByRequestedTime = hospitalBeds;
+  const IBeds = Math.trunc(estimatedBeds - impact.severeCasesByRequestedTime);
+  const SBeds = Math.trunc(estimatedBeds - severeImpact.severeCasesByRequestedTime);
+  impact.hospitalBedsByRequestedTime = IBeds;
+  severeImpact.hospitalBedsByRequestedTime = SBeds;
 
   // challenge 3
   impact.casesForICUByRequestedTime = 0.05 * impact.infectionsByRequestedTime;
