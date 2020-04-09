@@ -5,37 +5,37 @@ const covid19ImpactEstimator = (data) => {
   const {
     region, periodType, timeToElaspe, reportedCases, totalHospitalBeds
   } = data;
-  const { 
-    avgDailyIncomeInUSD, avgDailyIncomePopulation 
+  const {
+    avgDailyIncomeInUSD, avgDailyIncomePopulation
   } = region;
 
   const input = data;
   // convert timeToElaspe to days
   let days = 0;
   switch (periodType) {
-  case 'weeks':
-    days = input.timeToElaspe * 7;
-    break;
-  case 'months':
-    days = input.timeToElaspe * 30;
-    break;
-  default:
-    days = input.timeToElaspe;
-    break;
+    case 'weeks':
+      days = input.timeToElaspe * 7;
+      break;
+    case 'months':
+      days = input.timeToElaspe * 30;
+      break;
+    default:
+      days = input.timeToElaspe;
+      break;
   }
 
   // get factor
   let factor = 0;
   switch (periodType) {
-  case 'weeks':
-    factor = Math.truc((timeToElaspe * 7) / 3);
-    break;
-  case 'months':
-    factor = Math.truc((timeToElaspe * 30) / 3);
-    break;
-  default:
-    factor = Math.trunc(timeToElaspe / 3);
-    break;
+    case 'weeks':
+      factor = Math.truc((timeToElaspe * 7) / 3);
+      break;
+    case 'months':
+      factor = Math.truc((timeToElaspe * 30) / 3);
+      break;
+    default:
+      factor = Math.trunc(timeToElaspe / 3);
+      break;
   }
 
   // challenge 1
@@ -49,13 +49,14 @@ const covid19ImpactEstimator = (data) => {
   impact.severeCasesByRequestedTime = 0.15 * impact.infectionsByRequestedTime;
   severeImpact.severeCasesByRequestedTime = 0.15 * severeImpact.infectionsByRequestedTime;
   impact.hospitalBedsByRequestedTime = estimatedBeds - impact.severeCasesByRequestedTime;
-  severeImpact.hospitalBedsByRequestedTime = estimatedBeds - severeImpact.severeCasesByRequestedTime;
+  const hospitalBeds = estimatedBeds - severeImpact.severeCasesByRequestedTime;
+  severeImpact.hospitalBedsByRequestedTime = hospitalBeds;
 
   // challenge 3
   impact.casesForICUByRequestedTime = 0.05 * impact.infectionsByRequestedTime;
   severeImpact.casesForICUByRequestedTime = 0.05 * severeImpact.infectionsByRequestedTime;
   impact.casesForVentilatorsByRequestedTime = 0.02 * impact.infectionsByRequestedTime;
-  severeImpact.casesForVentilatorsByRequestedTime = 0.02*severeImpact.infectionsByRequestedTime;
+  severeImpact.casesForVentilatorsByRequestedTime = 0.02 * severeImpact.infectionsByRequestedTime;
 
   const incomeEstimate = avgDailyIncomePopulation * avgDailyIncomeInUSD * days;
   impact.dollarsInFlight = impact.infectionsByRequestedTime * incomeEstimate;
