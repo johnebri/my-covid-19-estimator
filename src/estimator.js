@@ -58,8 +58,8 @@ const covid19ImpactEstimator = (data) => {
   const SICU = 0.05 * severeImpact.infectionsByRequestedTime;
   impact.casesForICUByRequestedTime = IICU;
   severeImpact.casesForICUByRequestedTime = SICU;
-  const ICV = Math.trunc(0.02 * impact.infectionsByRequestedTime);
-  const SCV = Math.trunc(0.02 * severeImpact.infectionsByRequestedTime);
+  const ICV = 0.02 * impact.infectionsByRequestedTime;
+  const SCV = 0.02 * severeImpact.infectionsByRequestedTime;
   impact.casesForVentilatorsByRequestedTime = ICV;
   severeImpact.casesForVentilatorsByRequestedTime = SCV;
 
