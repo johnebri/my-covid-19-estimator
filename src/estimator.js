@@ -3,14 +3,16 @@ const covid19ImpactEstimator = (data) => {
   const severeImpact = {};
 
   const {
-      region, periodType, timeToElaspe, reportedCases, population, totalHospitalBeds
+    region, periodType, timeToElaspe, reportedCases, totalHospitalBeds
   } = data;
-  const {name, avgAge, avgDailyIncomeInUSD, avgDailyIncomePopulation} = region;
+  const { 
+    avgDailyIncomeInUSD, avgDailyIncomePopulation 
+  } = region;
 
   const input = data;
   // convert timeToElaspe to days
   let days = 0;
-  switch (input.periodType) {
+  switch (periodType) {
   case 'weeks':
     days = input.timeToElaspe * 7;
     break;
@@ -24,30 +26,30 @@ const covid19ImpactEstimator = (data) => {
 
   // get factor
   let factor = 0;
-  switch (input.periodType) {
+  switch (periodType) {
   case 'weeks':
-    factor = Math.truc((input.timeToElaspe * 7) / 3);
+    factor = Math.truc((timeToElaspe * 7) / 3);
     break;
   case 'months':
-    factor = Math.truc((input.timeToElaspe * 30) / 3);
+    factor = Math.truc((timeToElaspe * 30) / 3);
     break;
   default:
-    factor = Math.trunc(input.timeToElaspe / 3);
+    factor = Math.trunc(timeToElaspe / 3);
     break;
   }
 
   // challenge 1
-  impact.currentlyInfected = input.reportedCases * 10;
-  severeImpact.currentlyInfected = input.reportedCases * 50;
+  impact.currentlyInfected = reportedCases * 10;
+  severeImpact.currentlyInfected = reportedCases * 50;
   impact.infectionsByRequestedTime = impact.currentlyInfected * (2 ** factor);
   severeImpact.infectionsByRequestedTime = severeImpact.currentlyInfected * (2 ** factor);
 
   // challenge 2
-  const estimatedBeds = 0.35 * input.totalHospitalBeds;
+  const estimatedBeds = 0.35 * totalHospitalBeds;
   impact.severeCasesByRequestedTime = 0.15 * impact.infectionsByRequestedTime;
   severeImpact.severeCasesByRequestedTime = 0.15 * severeImpact.infectionsByRequestedTime;
   impact.hospitalBedsByRequestedTime = estimatedBeds - impact.severeCasesByRequestedTime;
-  severeImpact.hospitalBedsByRequestedTime=estimatedBeds-severeImpact.severeCasesByRequestedTime;
+  severeImpact.hospitalBedsByRequestedTime = estimatedBeds - severeImpact.severeCasesByRequestedTime;
 
   // challenge 3
   impact.casesForICUByRequestedTime = 0.05 * impact.infectionsByRequestedTime;
