@@ -2,16 +2,14 @@ const impact = {};
 const severeImpact = {};
 
 const covid19ImpactEstimator = (data) => {
-
-    const input = data;    
-
-    // convert timeToElaspe to days
+const input = data;    
+// convert timeToElaspe to days
     let days = 0;
     switch(input.periodType) {
-        case "weeks":
+        case 'weeks':
             days = input.timeToElaspe * 7;
             break;
-        case "months":
+        case 'months':
             days = input.timeToElaspe * 30;
             break;
         default:
@@ -22,10 +20,10 @@ const covid19ImpactEstimator = (data) => {
     // get factor
     let factor = 0;
     switch(input.periodType) {
-        case "weeks":
+        case 'weeks':
             factor = Math.truc((input.timeToElaspe * 7) / 3);
             break;
-        case "months":
+        case 'months':
             factor = Math.truc((input.timeToElaspe * 30) / 3);
             break;
         default:
@@ -60,7 +58,6 @@ const covid19ImpactEstimator = (data) => {
         severeImpact,
     };
 };
-
 
 export default covid19ImpactEstimator;
 
