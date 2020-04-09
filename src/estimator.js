@@ -3,24 +3,24 @@ const covid19ImpactEstimator = (data) => {
   const severeImpact = {};
 
   const {
-    region, periodType, timeToElaspe, reportedCases, totalHospitalBeds
+    region, periodType, timeToElapse, reportedCases, totalHospitalBeds
   } = data;
   const {
     avgDailyIncomeInUSD, avgDailyIncomePopulation
   } = region;
 
   const input = data;
-  // convert timeToElaspe to days
+  // convert timeToElapse to days
   let days = 0;
   switch (periodType) {
     case 'weeks':
-      days = input.timeToElaspe * 7;
+      days = timeToElapse * 7;
       break;
     case 'months':
-      days = input.timeToElaspe * 30;
+      days = timeToElapse * 30;
       break;
     default:
-      days = input.timeToElaspe;
+      days = timeToElapse;
       break;
   }
 
@@ -28,13 +28,13 @@ const covid19ImpactEstimator = (data) => {
   let factor = 0;
   switch (periodType) {
     case 'weeks':
-      factor = Math.truc((timeToElaspe * 7) / 3);
+      factor = Math.trunc((timeToElapse * 7) / 3);
       break;
     case 'months':
-      factor = Math.truc((timeToElaspe * 30) / 3);
+      factor = Math.trunc((timeToElapse * 30) / 3);
       break;
     default:
-      factor = Math.trunc(timeToElaspe / 3);
+      factor = Math.trunc(timeToElapse / 3);
       break;
   }
 
