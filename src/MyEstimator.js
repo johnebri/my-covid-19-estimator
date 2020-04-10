@@ -12,7 +12,7 @@ module.exports = {
       });
     } catch (error) {
         return res.status(400).json({
-          message: 'An error has occurred';
+          message: 'An error has occurred'
         });
     }
   },
@@ -26,7 +26,7 @@ module.exports = {
       });
     } catch (error) {
         return res.status(400).json({
-          message: 'An error has occurred';
+          message: 'An error has occurred'
       });
     }
   }
