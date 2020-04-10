@@ -25,8 +25,8 @@ module.exports = {
         severeImpact: responseData.severeImpact
       });
     } catch (error) {
-        return res.status(400).json({
-          message: 'An error has occurred'
+      return res.status(400).json({
+        message: 'An error has occurred'
       });
     }
   }
