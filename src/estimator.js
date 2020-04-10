@@ -64,8 +64,8 @@ const covid19ImpactEstimator = (data) => {
   severeImpact.casesForVentilatorsByRequestedTime = SCV;
 
   const incomeEstimate = Math.trunc(avgDailyIncomePopulation * avgDailyIncomeInUSD * days);
-  impact.dollarsInFlight = Math.trunc(impact.infectionsByRequestedTime * incomeEstimate);
-  const SDF = Math.trunc(severeImpact.infectionsByRequestedTime * incomeEstimate);
+  impact.dollarsInFlight = impact.infectionsByRequestedTime * incomeEstimate;
+  const SDF = severeImpact.infectionsByRequestedTime * incomeEstimate;
   severeImpact.dollarsInFlight = SDF;
 
   return {
