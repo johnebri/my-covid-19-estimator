@@ -1,4 +1,4 @@
-const xml = require('xml');
+// const xml = require('xml');
 const covidEstimator = require('./estimator.js');
 
 module.exports = {
