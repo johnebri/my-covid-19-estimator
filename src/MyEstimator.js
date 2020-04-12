@@ -18,11 +18,7 @@ module.exports = {
       };
       logs.push(newData);
       fs.writeFileSync('./src/logs.json', JSON.stringify(logs));
-      return res.status(200).json({
-        data: responseData.data,
-        impact: responseData.impact,
-        severeImpact: responseData.severeImpact
-      });
+      return res.status(200).set('Content-Type', 'application/json').send(responseData);
     } catch (error) {
       return res.status(500).json({
         message: 'An error has occurred'
@@ -43,13 +39,7 @@ module.exports = {
       };
       logs.push(newData);
       fs.writeFileSync('./src/logs.json', JSON.stringify(logs));
-      res.set('Content-Type', 'text/xml');
-      const xmldata = toXML({
-        data: responseData.data,
-        impact: responseData.impact,
-        severeImpact: responseData.severeImpact
-      });
-      return res.send(xmldata);
+      return res.status(200).set('Content-Type', 'text/xml').send(toXML(responseData));
     } catch (error) {
       return res.status(500).json({
         message: 'An error has occurred'
@@ -57,13 +47,12 @@ module.exports = {
     }
   },
   async logs(req, res) {
-    let logsOutput = '\n';
+    let logsOutput = '';
     for (let x = 1; x < logs.length; x += 1) {
-      logsOutput += '' + logs[x].method + '   ' + logs[x].url + '   ' + logs[x].statusCode + '   ' + logs[x].executionTime + 'ms\n';
+      logsOutput += `${logs[x].method} \t ${logs[x].url} \t\t ${logs[x].statusCode} \t ${logs[x].executionTime}ms \n`;
     }
     try {
-      res.set('Content-Type', 'text/plain');
-      return res.send(logsOutput);
+      return res.status(200).set('Content-Type', 'text/plain').send(logsOutput);
     } catch (error) {
       return res.status(500).json({
         message: 'An error has occurred'
