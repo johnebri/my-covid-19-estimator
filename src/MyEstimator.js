@@ -1,34 +1,74 @@
-// const xml = require('xml');
+const { toXML } = require('jstoxml');
+const fs = require('fs');
 const covidEstimator = require('./estimator.js');
+const logs = require('./logs.json');
 
 module.exports = {
   async fetch(req, res) {
-    try {
-      const responseData = await covidEstimator(req.body);
+    try {   
+      let start_time = new Date().getTime();
+      const responseData =  await covidEstimator(req.body);
+      let timeTaken = (new Date().getTime() - start_time);
+      // push new json
+      const newData = {
+        "method": req.method,
+        "url": req.url,
+        "statusCode": "200",
+        "executionTime" : timeTaken + 'ms'
+      }
+      
+      logs.push(newData);
+      fs.writeFileSync('./src/logs.json', JSON.stringify(logs));
+    
       return res.status(200).json({
         data: responseData.data,
         impact: responseData.impact,
         severeImpact: responseData.severeImpact
       });
     } catch (error) {
-      return res.status(400).json({
+      return res.status(500).json({
         message: 'An error has occurred'
       });
     }
   },
   async fetchxml(req, res) {
     try {
-      const responseData = await covidEstimator(req.body);
-      return res.status(200).json({
+      let start_time = new Date().getTime();
+      const responseData =  await covidEstimator(req.body);
+      let timeTaken = (new Date().getTime() - start_time);
+       // push new json
+       const newData = {
+        "method": req.method,
+        "url": req.url,
+        "statusCode": "200",
+        "executionTime" : timeTaken + 'ms'
+      }
+      
+      logs.push(newData);
+      fs.writeFileSync('./src/logs.json', JSON.stringify(logs));
+      res.set('Content-Type', 'text/xml');
+      const xmldata = toXML({
         data: responseData.data,
         impact: responseData.impact,
         severeImpact: responseData.severeImpact
       });
-      // res.set('Content-Type', 'text/xml');
-      // .type('application/xml');
-      // res.send(xml(output));
+      res.send(xmldata);
     } catch (error) {
-      return res.status(400).json({
+      return res.status(500).json({
+        message: 'An error has occurred'
+      });
+    }
+  },
+  async logs(req, res) {
+    let logsOutput = '';
+    for(let x = 1; x < logs.length; x++) {
+      logsOutput += logs[x].method + ' ' + logs[x].url + '\t\t' + logs[x].statusCode + '\t\t' + logs[x].executionTime + '\n';
+    }
+    try {
+      res.set('Content-Type', 'text/html');
+      res.send(logsOutput);
+    } catch (error) {
+      return res.status(500).json({
         message: 'An error has occurred'
       });
     }
