@@ -57,12 +57,12 @@ module.exports = {
     }
   },
   async logs(req, res) {
-    let logsOutput = '';
-    for (let x = 1; x < logs.length; x+=1) {
-      logsOutput += logs[x].method + '\t\t' + logs[x].url + '\t\t' + logs[x].statusCode + '\t\t' + logs[x].executionTime + 'ms\n';
+    let logsOutput = '\n';
+    for (let x = 1; x < logs.length; x += 1) {
+      logsOutput += '' + logs[x].method + '   ' + logs[x].url + '   ' + logs[x].statusCode + '   ' + logs[x].executionTime + 'ms\n';
     }
     try {
-      res.set('Content-Type', 'text/html');
+      res.set('Content-Type', 'text/plain');
       return res.send(logsOutput);
     } catch (error) {
       return res.status(500).json({
