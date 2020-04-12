@@ -5,21 +5,19 @@ const logs = require('./logs.json');
 
 module.exports = {
   async fetch(req, res) {
-    try {   
-      let start_time = new Date().getTime();
-      const responseData =  await covidEstimator(req.body);
-      let timeTaken = (new Date().getTime() - start_time);
+    try {
+      const startTime = new Date().getTime();
+      const responseData = await covidEstimator(req.body);
+      const timeTaken = (new Date().getTime() - startTime);
       // push new json
       const newData = {
-        "method": req.method,
-        "url": req.url,
-        "statusCode": "200",
-        "executionTime" : timeTaken + 'ms'
-      }
-      
+        method: req.method,
+        url: req.url,
+        statusCode: '200',
+        executionTime: timeTaken
+      };
       logs.push(newData);
       fs.writeFileSync('./src/logs.json', JSON.stringify(logs));
-    
       return res.status(200).json({
         data: responseData.data,
         impact: responseData.impact,
@@ -38,12 +36,11 @@ module.exports = {
       let timeTaken = (new Date().getTime() - start_time);
        // push new json
        const newData = {
-        "method": req.method,
-        "url": req.url,
-        "statusCode": "200",
-        "executionTime" : timeTaken + 'ms'
-      }
-      
+        method: req.method,
+        url: req.url,
+        statusCode: '200',
+        executionTime: timeTaken
+      };
       logs.push(newData);
       fs.writeFileSync('./src/logs.json', JSON.stringify(logs));
       res.set('Content-Type', 'text/xml');
@@ -52,7 +49,7 @@ module.exports = {
         impact: responseData.impact,
         severeImpact: responseData.severeImpact
       });
-      res.send(xmldata);
+      return res.send(xmldata);
     } catch (error) {
       return res.status(500).json({
         message: 'An error has occurred'
@@ -62,11 +59,11 @@ module.exports = {
   async logs(req, res) {
     let logsOutput = '';
     for(let x = 1; x < logs.length; x++) {
-      logsOutput += logs[x].method + ' ' + logs[x].url + '\t\t' + logs[x].statusCode + '\t\t' + logs[x].executionTime + '\n';
+      logsOutput += logs[x].method + '\t\t' + logs[x].url + '\t\t' + logs[x].statusCode + '\t\t' + logs[x].executionTime + 'ms \n';
     }
     try {
       res.set('Content-Type', 'text/html');
-      res.send(logsOutput);
+      return res.send(logsOutput);
     } catch (error) {
       return res.status(500).json({
         message: 'An error has occurred'

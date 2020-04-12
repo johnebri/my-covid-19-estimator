@@ -1,1 +1,1 @@
-[]
+[{"method":"POST","url":"/api/v1/on-covid-19/","statusCode":"200","executionTime":"1ms"},{"method":"POST","url":"/api/v1/on-covid-19/xml","statusCode":"200","executionTime":1}]
