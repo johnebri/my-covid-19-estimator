@@ -31,11 +31,11 @@ module.exports = {
   },
   async fetchxml(req, res) {
     try {
-      let start_time = new Date().getTime();
-      const responseData =  await covidEstimator(req.body);
-      let timeTaken = (new Date().getTime() - start_time);
-       // push new json
-       const newData = {
+      const startTime = new Date().getTime();
+      const responseData = await covidEstimator(req.body);
+      const timeTaken = (new Date().getTime() - startTime);
+      // push new json
+      const newData = {
         method: req.method,
         url: req.url,
         statusCode: '200',
@@ -58,8 +58,8 @@ module.exports = {
   },
   async logs(req, res) {
     let logsOutput = '';
-    for(let x = 1; x < logs.length; x++) {
-      logsOutput += logs[x].method + '\t\t' + logs[x].url + '\t\t' + logs[x].statusCode + '\t\t' + logs[x].executionTime + 'ms \n';
+    for (let x = 1; x < logs.length; x+=1) {
+      logsOutput += logs[x].method + '\t\t' + logs[x].url + '\t\t' + logs[x].statusCode + '\t\t' + logs[x].executionTime + 'ms\n';
     }
     try {
       res.set('Content-Type', 'text/html');
