@@ -33,11 +33,12 @@ app.post(`${baseUrl}`, async (req, res) => {
   const responseData = await covidEstimator(req.body);
   res.status(200).set('Content-Type', 'application/json').send(responseData);
   const exeTime = parseInt(res.getHeader('X-Response-Time'), 10);
+  const exeTimeStr = exeTime.toString();
   const newData = {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: exeTime
+    executionTime: `0${exeTimeStr}ms`
   };
   writeToLog(newData);
 });
@@ -45,11 +46,12 @@ app.post(`${baseUrl}/json`, async (req, res) => {
   const responseData = await covidEstimator(req.body);
   res.status(200).set('Content-Type', 'application/json').send(responseData);
   const exeTime = parseInt(res.getHeader('X-Response-Time'), 10);
+  const exeTimeStr = exeTime.toString();
   const newData = {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: exeTime
+    executionTime: `0${exeTimeStr}ms`
   };
   writeToLog(newData);
 });
@@ -58,18 +60,19 @@ app.post(`${baseUrl}/xml`, async (req, res) => {
   const xmlData = toXML(responseData);
   res.status(200).set('Content-Type', 'application/xml').send(xmlData);
   const exeTime = parseInt(res.getHeader('X-Response-Time'), 10);
+  const exeTimeStr = exeTime.toString();
   const newData = {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: exeTime
+    executionTime: `0${exeTimeStr}ms`
   };
   writeToLog(newData);
 });
 app.get(`${baseUrl}/logs`, async (req, res) => {
   let logsOutput = '';
   for (let x = 1; x < logs.length; x += 1) {
-    logsOutput += `${logs[x].method} \t ${logs[x].url} \t\t ${logs[x].statusCode} \t 0${logs[x].executionTime}ms \n`;
+    logsOutput += `${logs[x].method} \t ${logs[x].url} \t\t ${logs[x].statusCode} \t ${logs[x].executionTime}\n`;
   }
   res.status(200).set('Content-Type', 'text/plain').send(logsOutput);
 });
