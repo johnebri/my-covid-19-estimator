@@ -69,7 +69,7 @@ app.post(`${baseUrl}/xml`, async (req, res) => {
 app.get(`${baseUrl}/logs`, async (req, res) => {
   let logsOutput = '';
   for (let x = 1; x < logs.length; x += 1) {
-    logsOutput += `${logs[x].method} \t ${logs[x].url} \t\t ${logs[x].statusCode} \t ${logs[x].executionTime} ms \n`;
+    logsOutput += `${logs[x].method} \t ${logs[x].url} \t\t ${logs[x].statusCode} \t 0${logs[x].executionTime}ms \n`;
   }
   res.status(200).set('Content-Type', 'text/plain').send(logsOutput);
 });
