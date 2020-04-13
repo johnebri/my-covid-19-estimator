@@ -32,22 +32,24 @@ const baseUrl = '/api/v1/on-covid-19';
 app.post(`${baseUrl}`, async (req, res) => {
   const responseData = await covidEstimator(req.body);
   res.status(200).set('Content-Type', 'application/json').send(responseData);
+  const exeTime = parseInt(res.getHeader('X-Response-Time'));
   const newData = {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: parseInt(res.getHeader('X-Response-Time'))
+    executionTime: exeTime
   };
   writeToLog(newData);
 });
 app.post(`${baseUrl}/json`, async (req, res) => {
   const responseData = await covidEstimator(req.body);
   res.status(200).set('Content-Type', 'application/json').send(responseData);
+  const exeTime = parseInt(res.getHeader('X-Response-Time'));
   const newData = {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: parseInt(res.getHeader('X-Response-Time'))
+    executionTime: exeTime
   };
   writeToLog(newData);
 });
@@ -55,11 +57,12 @@ app.post(`${baseUrl}/xml`, async (req, res) => {
   const responseData = await covidEstimator(req.body);
   const xmlData = toXML(responseData);
   res.status(200).set('Content-Type', 'application/xml').send(xmlData);
+  const exeTime = parseInt(res.getHeader('X-Response-Time'));
   const newData = {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: parseInt(res.getHeader('X-Response-Time'))
+    executionTime: exeTime
   };
   writeToLog(newData);
 });
