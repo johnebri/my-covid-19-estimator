@@ -1,1 +1,1 @@
-[{"method":"POST","url":"/api/v1/on-covid-19/","statusCode":200,"executionTime":"28.311ms"}]
+[{"method":"POST","url":"/api/v1/on-covid-19/","statusCode":200,"executionTime":7},{"method":"POST","url":"/api/v1/on-covid-19/json","statusCode":200,"executionTime":2},{"method":"POST","url":"/api/v1/on-covid-19/json","statusCode":200,"executionTime":5},{"method":"POST","url":"/api/v1/on-covid-19/","statusCode":200,"executionTime":6}]

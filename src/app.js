@@ -36,7 +36,7 @@ app.post(`${baseUrl}`, async (req, res) => {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: res.getHeader('X-Response-Time')
+    executionTime: parseInt(res.getHeader('X-Response-Time'))
   };
   writeToLog(newData);
 });
@@ -47,7 +47,7 @@ app.post(`${baseUrl}/json`, async (req, res) => {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: res.getHeader('X-Response-Time')
+    executionTime: parseInt(res.getHeader('X-Response-Time'))
   };
   writeToLog(newData);
 });
@@ -59,14 +59,14 @@ app.post(`${baseUrl}/xml`, async (req, res) => {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: res.getHeader('X-Response-Time')
+    executionTime: parseInt(res.getHeader('X-Response-Time'))
   };
   writeToLog(newData);
 });
 app.get(`${baseUrl}/logs`, async (req, res) => {
   let logsOutput = '';
   for (let x = 1; x < logs.length; x += 1) {
-    logsOutput += `${logs[x].method} \t ${logs[x].url} \t\t ${logs[x].statusCode} \t ${logs[x].executionTime} \n`;
+    logsOutput += `${logs[x].method} \t ${logs[x].url} \t\t ${logs[x].statusCode} \t ${logs[x].executionTime} ms \n`;
   }
   res.status(200).set('Content-Type', 'text/plain').send(logsOutput);
 });
