@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
   res.write(`
     <div style="width: 100%; text-align: center;">
       <h1>Welcome to My Covid19 Estimator API</h1>
-      <a href="#" style="padding: 15px; background: #419144; color: white; text-decoration: none; border-radius: 3px;">
+      <a href="https://documenter.getpostman.com/view/9082520/SzezdCCT" style="padding: 15px; background: #419144; color: white; text-decoration: none; border-radius: 3px;">
         View Documentation
       </a>
     </div>
@@ -38,7 +38,7 @@ app.post(`${baseUrl}`, async (req, res) => {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: `0${exeTimeStr}ms`
+    executionTime: `${exeTimeStr}ms`
   };
   writeToLog(newData);
 });
@@ -51,7 +51,7 @@ app.post(`${baseUrl}/json`, async (req, res) => {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: `0${exeTimeStr}ms`
+    executionTime: `${exeTimeStr}ms`
   };
   writeToLog(newData);
 });
@@ -65,7 +65,7 @@ app.post(`${baseUrl}/xml`, async (req, res) => {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: `0${exeTimeStr}ms`
+    executionTime: `${exeTimeStr}ms`
   };
   writeToLog(newData);
 });
