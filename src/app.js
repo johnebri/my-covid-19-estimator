@@ -38,7 +38,7 @@ app.post(`${baseUrl}`, async (req, res) => {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: `${exeTimeStr}ms`
+    executionTime: `0${exeTimeStr}ms`
   };
   writeToLog(newData);
 });
@@ -51,7 +51,7 @@ app.post(`${baseUrl}/json`, async (req, res) => {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: `${exeTimeStr}ms`
+    executionTime: `0${exeTimeStr}ms`
   };
   writeToLog(newData);
 });
@@ -65,7 +65,7 @@ app.post(`${baseUrl}/xml`, async (req, res) => {
     method: req.method,
     url: req.url,
     statusCode: res.statusCode,
-    executionTime: `${exeTimeStr}ms`
+    executionTime: `0${exeTimeStr}ms`
   };
   writeToLog(newData);
 });
