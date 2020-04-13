@@ -5,12 +5,13 @@ const fs = require('fs');
 const cors = require('cors');
 const covidEstimator = require('./estimator.js');
 const logs = require('./logs.json');
+
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(responseTime());
 app.get('/', (req, res) => {
-  res.writeHead(200, {'Content-type': 'text/html'});
+  res.writeHead(200, { 'Content-type': 'text/html' });
   res.write(`
     <div style="width: 100%; text-align: center;">
       <h1>Welcome to My Covid19 Estimator API</h1>
@@ -19,12 +20,10 @@ app.get('/', (req, res) => {
       </a>
     </div>
   `);
-  console.log(res.getHeader('X-Response-Time'));
   res.end();
 });
 const port = process.env.PORT || 3000;
 app.listen(port);
-console.log('app running on port', port);
 const writeToLog = (newData) => {
   logs.push(newData);
   fs.writeFileSync('./src/logs.json', JSON.stringify(logs));
