@@ -53,7 +53,8 @@ app.post(`${baseUrl}/json`, async (req, res) => {
 });
 app.post(`${baseUrl}/xml`, async (req, res) => {
   const responseData = await covidEstimator(req.body);
-  res.status(200).set('Content-Type', 'text/xml').send(toXML(responseData));
+  const xmlData = toXML(responseData);
+  res.status(200).set('Content-Type', 'application/xml').send(xmlData);
   const newData = {
     method: req.method,
     url: req.url,
@@ -62,7 +63,7 @@ app.post(`${baseUrl}/xml`, async (req, res) => {
   };
   writeToLog(newData);
 });
-app.post(`${baseUrl}/logs`, async (req, res) => {
+app.get(`${baseUrl}/logs`, async (req, res) => {
   let logsOutput = '';
   for (let x = 1; x < logs.length; x += 1) {
     logsOutput += `${logs[x].method} \t ${logs[x].url} \t\t ${logs[x].statusCode} \t ${logs[x].executionTime} \n`;
